@@ -11,7 +11,7 @@ using Repositories;
 namespace StoreApp.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20231111101813_start")]
+    [Migration("20231111114656_start")]
     partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,7 @@ namespace StoreApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("GiftWrap")
@@ -87,6 +88,7 @@ namespace StoreApp.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Line2")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Line3")
@@ -104,7 +106,7 @@ namespace StoreApp.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.ToTable("orders");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Entities.Models.Product", b =>

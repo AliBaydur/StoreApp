@@ -23,23 +23,23 @@ namespace StoreApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "orders",
+                name: "Orders",
                 columns: table => new
                 {
                     OrderId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Line1 = table.Column<string>(type: "TEXT", nullable: false),
-                    Line2 = table.Column<string>(type: "TEXT", nullable: true),
+                    Line2 = table.Column<string>(type: "TEXT", nullable: false),
                     Line3 = table.Column<string>(type: "TEXT", nullable: true),
-                    City = table.Column<string>(type: "TEXT", nullable: true),
+                    City = table.Column<string>(type: "TEXT", nullable: false),
                     GiftWrap = table.Column<bool>(type: "INTEGER", nullable: false),
                     Shipped = table.Column<bool>(type: "INTEGER", nullable: false),
                     OrderedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_orders", x => x.OrderId);
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,9 +78,9 @@ namespace StoreApp.Migrations
                 {
                     table.PrimaryKey("PK_CartLine", x => x.CartLineID);
                     table.ForeignKey(
-                        name: "FK_CartLine_orders_OrderId",
+                        name: "FK_CartLine_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "orders",
+                        principalTable: "Orders",
                         principalColumn: "OrderId");
                     table.ForeignKey(
                         name: "FK_CartLine_Products_ProductId",
@@ -157,7 +157,7 @@ namespace StoreApp.Migrations
                 name: "CartLine");
 
             migrationBuilder.DropTable(
-                name: "orders");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");

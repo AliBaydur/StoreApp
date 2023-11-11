@@ -13,7 +13,7 @@ namespace Services
             _manager = manager;
         }
 
-        public IQueryable<Order> orders => _manager.Order.orders;
+        public IQueryable<Order> Orders => _manager.Order.Orders;
 
         public int NumberOfInProcess => _manager.Order.NumberOfInProcess;
         public void Complete(int id)

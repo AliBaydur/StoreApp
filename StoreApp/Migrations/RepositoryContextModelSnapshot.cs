@@ -75,6 +75,7 @@ namespace StoreApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("GiftWrap")
@@ -85,6 +86,7 @@ namespace StoreApp.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Line2")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Line3")
@@ -102,7 +104,7 @@ namespace StoreApp.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.ToTable("orders");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Entities.Models.Product", b =>

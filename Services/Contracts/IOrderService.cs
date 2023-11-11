@@ -4,7 +4,7 @@ namespace Services.Contracts
 {
     public interface IOrderService
     {
-        IQueryable<Order> orders { get; }
+        IQueryable<Order> Orders { get; }
         Order? GetOneOrder(int id);
         void Complete(int id);
         void SaveOrder(Order order);

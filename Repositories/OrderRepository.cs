@@ -10,13 +10,13 @@ namespace Repositories
         {
         }
 
-        public IQueryable<Order> orders => _context.orders
-            .Include(O => O.Lines)
+        public IQueryable<Order> Orders => _context.Orders
+            .Include(o => o.Lines)
             .ThenInclude(cl => cl.Product)
             .OrderBy(o => o.Shipped)
             .ThenByDescending(o => o.OrderId);
 
-        public int NumberOfInProcess => _context.orders.Count(o => o.Shipped.Equals(false));
+        public int NumberOfInProcess => _context.Orders.Count(o => o.Shipped.Equals(false));
 
         public void Complete(int id)
         {
@@ -35,7 +35,7 @@ namespace Repositories
         {
             _context.AttachRange(order.Lines.Select(l => l.Product));
             if (order.OrderId == 0)
-                _context.orders.Add(order);
+                _context.Orders.Add(order);
             _context.SaveChanges();          
         }
     }

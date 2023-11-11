@@ -7,7 +7,6 @@ namespace Repositories
         private readonly RepositoryContext _context;
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-
         private readonly IOrderRepository _orderRepository;
 
         public RepositoryManager(IProductRepository productRepository,
