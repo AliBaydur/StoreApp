@@ -12,6 +12,8 @@ namespace Repositories
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<Order> orders { get; set; }
+
         public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
         {
 
