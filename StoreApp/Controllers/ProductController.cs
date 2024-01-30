@@ -1,9 +1,11 @@
 using Entities.Models;
+using Entities.RequestParameters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Contracts;
 using Services.Contracts;
+using StoreApp.Models;
 
 namespace StoreApp.Controllers
 {
@@ -17,10 +19,20 @@ namespace StoreApp.Controllers
         }
      
 
-        public IActionResult Index()
+        public IActionResult Index(ProductRequestParameters p)
         {
-            var model = _maneger.ProductService.GetAllProducts(false);
-            return View(model);
+            var products = _maneger.ProductService.GetAllProductsWithDetails(p);
+            var pagination = new Pagination()
+            {
+                CurrenPage = p.PageNumber,
+                ItemsPerPage = p.PageSize,
+                TotalItems = _maneger.ProductService.GetAllProducts(false).Count()
+            };
+            return View(new ProductListViewModel()
+            {
+                Products = products,
+                Pagination = pagination
+            });
         }
 
         public IActionResult Get([FromRoute(Name ="id")] int id)

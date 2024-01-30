@@ -1,6 +1,6 @@
 <nav class="navbar border-bottom navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">Store App</a>
+    <div class="container">        
+        <a class="navbar-brand" href="/"><i class="fa-solid fa-store fa-2x text-secondary"></i></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,12 +24,10 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" asp-area=""  asp-page="/Cart">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    Cart(@await Component.InvokeAsync("CartSummery"))
+                    Card(@await Component.InvokeAsync("CartSummery"))
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Admin</a>
-                </li>               
+                </li>                   
+                <partial name="_LoginMenu"/>          
             </ul>
         </div>
     </div>
