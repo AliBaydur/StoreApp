@@ -11,8 +11,8 @@ using Repositories;
 namespace StoreApp.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20231111114656_start")]
-    partial class start
+    [Migration("20231114200630_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -128,6 +128,9 @@ namespace StoreApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("ShowCase")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Summary")
                         .HasColumnType("TEXT");
 
@@ -145,6 +148,7 @@ namespace StoreApp.Migrations
                             ImageUrl = "1.jpg",
                             Price = 17000m,
                             ProductName = "Computer",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
@@ -154,6 +158,7 @@ namespace StoreApp.Migrations
                             ImageUrl = "2.jpg",
                             Price = 1000m,
                             ProductName = "Keyboard",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
@@ -163,15 +168,17 @@ namespace StoreApp.Migrations
                             ImageUrl = "3.jpg",
                             Price = 500m,
                             ProductName = "Mouse",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
                         {
                             ProductId = 4,
-                            CategoryId = 2,
+                            CategoryId = 1,
                             ImageUrl = "4.jpg",
                             Price = 7000m,
                             ProductName = "Monitor",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
@@ -181,6 +188,7 @@ namespace StoreApp.Migrations
                             ImageUrl = "5.jpg",
                             Price = 1500m,
                             ProductName = "Deck",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
@@ -190,6 +198,7 @@ namespace StoreApp.Migrations
                             ImageUrl = "6.jpg",
                             Price = 25m,
                             ProductName = "History",
+                            ShowCase = false,
                             Summary = ""
                         },
                         new
@@ -199,6 +208,37 @@ namespace StoreApp.Migrations
                             ImageUrl = "7.jpg",
                             Price = 45m,
                             ProductName = "Hamlet",
+                            ShowCase = false,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 8,
+                            CategoryId = 2,
+                            ImageUrl = "8.jpg",
+                            Price = 16999m,
+                            ProductName = "AirWrap",
+                            ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 9,
+                            CategoryId = 1,
+                            ImageUrl = "9.jpg",
+                            Price = 6000m,
+                            ProductName = "Airpos",
+                            ShowCase = true,
+                            Summary = ""
+                        },
+                        new
+                        {
+                            ProductId = 10,
+                            CategoryId = 2,
+                            ImageUrl = "10.jpg",
+                            Price = 70000m,
+                            ProductName = "Iphone 15",
+                            ShowCase = true,
                             Summary = ""
                         });
                 });
