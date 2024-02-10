@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 
 namespace StoreApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private readonly IServiceManager _manager;
@@ -15,6 +17,7 @@ namespace StoreApp.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Title"] = "Roles";
             return View(_manager.AuthService.Roles);
         }
     }

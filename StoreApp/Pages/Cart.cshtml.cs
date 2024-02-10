@@ -21,13 +21,14 @@ namespace StoreApp.Pages
         
         public void OnGet(string returnUrl)
         {
+            ViewData["Title"] = "Card";
             ReturnUrl = returnUrl ?? "/";
             //Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
         }
 
         public IActionResult OnPost(int ProductId, string returnUrl)
         {
-            Product? product = _manager.ProductService.GetOneProduct(ProductId, false);
+            Product? product = _manager.ProductService.GetOneProduct(ProductId, false);           
 
             if (product is not null)
             {
@@ -40,6 +41,7 @@ namespace StoreApp.Pages
 
         public IActionResult OnPostRemove(int id, string returnUrl)
         {
+             ViewData["Title"] = "Card";
             //Cart = HttpContext.Session.GetJson<Cart>("cart") ?? new Cart();
             Cart.RemoveLine(Cart.Lines.First(cl => cl.Product.ProductId.Equals(id)).Product);
             //HttpContext.Session.SetJson<Cart>("cart", Cart);

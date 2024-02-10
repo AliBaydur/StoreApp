@@ -1,6 +1,8 @@
 using Entities.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Repositories;
 using Repositories.Contracts;
 using Services;
@@ -15,7 +17,7 @@ namespace StoreApp.Infrastructure.Extensions
         {
             services.AddDbContext<RepositoryContext>(options =>
             {
-                options.UseSqlite(configuration.GetConnectionString("sqlconnection"),
+                options.UseSqlServer(configuration.GetConnectionString("mssqlconnection"),
                 b => b.MigrationsAssembly("StoreApp"));
 
                 options.EnableSensitiveDataLogging(true);
@@ -62,6 +64,17 @@ namespace StoreApp.Infrastructure.Extensions
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<IOrderService, OrderManager>();
             services.AddScoped<IAuthService, AuthManager>();
+        }
+
+        public static void ConfigureApplicationCookie(this IServiceCollection services)
+        {
+            services.ConfigureApplicationCookie(options => 
+            {
+                options.LoginPath = new PathString("/Account/Login");
+                options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                options.AccessDeniedPath = new PathString("/Account/AccessDenied");
+            });
         }
 
         public static void ConfigureRounting(this IServiceCollection services)

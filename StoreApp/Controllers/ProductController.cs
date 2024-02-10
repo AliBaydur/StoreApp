@@ -21,6 +21,7 @@ namespace StoreApp.Controllers
 
         public IActionResult Index(ProductRequestParameters p)
         {
+             ViewData["Title"] = "Product";
             var products = _maneger.ProductService.GetAllProductsWithDetails(p);
             var pagination = new Pagination()
             {
@@ -38,6 +39,7 @@ namespace StoreApp.Controllers
         public IActionResult Get([FromRoute(Name ="id")] int id)
         {
             var model = _maneger.ProductService.GetOneProduct(id, false);
+            ViewData["Title"] = model?.ProductName;
             return View(model);
         }
     }

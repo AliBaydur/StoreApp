@@ -1,4 +1,5 @@
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Services.Contracts;
@@ -16,12 +17,18 @@ namespace StoreApp.Controllers
             _cart = cart;
         }
 
-        public ViewResult Checkout() => View(new Order());
+        [Authorize]
+        public ViewResult Checkout()
+        {
+            ViewData["Title"] = "Order";
+            return View(new Order());
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Checkout([FromForm]Order order)
         {
+            ViewData["Title"] = "Order";
             if (_cart.Lines.Count() == 0)
             {
                 ModelState.AddModelError("","Sorry, Your cart is empty.");

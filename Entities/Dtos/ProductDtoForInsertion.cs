@@ -8,6 +8,6 @@ namespace Entities.Dtos
 {
     public record ProductDtoForInsertion : ProductDto
     {
-
+        public bool ShowCase { get; set; }
     }
 }

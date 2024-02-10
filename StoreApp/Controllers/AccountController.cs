@@ -30,7 +30,7 @@ namespace StoreApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = await _userManager.FindByNameAsync(model.Name);
+                IdentityUser user = await _userManager.FindByNameAsync(model.Name);                
                 if (user is not null)
                 {
                     //Oturum açma
@@ -53,13 +53,14 @@ namespace StoreApp.Controllers
 
         public IActionResult Register()
         {
+            ViewData["Title"] = "Register";
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register([FromForm] RegisterDto model)
-        {
+        {            
             var user = new IdentityUser
             {
                 UserName = model.UserName,
@@ -83,6 +84,12 @@ namespace StoreApp.Controllers
                     ModelState.AddModelError("", err.Description);
                 }
             }
+            return View();
+        }
+
+        public IActionResult AccessDenied([FromQuery(Name ="ReturnUrl")] string returnUrl)
+        { 
+            ViewData["Title"] = "Access Denied";
             return View();
         }
     }

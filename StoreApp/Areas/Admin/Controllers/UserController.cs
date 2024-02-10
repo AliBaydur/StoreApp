@@ -1,10 +1,12 @@
 using Entities.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 
 namespace StoreApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly IServiceManager _manager;
@@ -16,34 +18,37 @@ namespace StoreApp.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Title"] = "Users";
             var users = _manager.AuthService.GetAllUsers();
             return View(users);
         }
 
         public IActionResult Create()
         {
+            ViewData["Title"] = "Create User";
             return View(new UserDtoForCreation()
             {
-                Roles =new HashSet<string>(_manager
+                Roles = new HashSet<string>(_manager
                     .AuthService
                     .Roles
-                    .Select(r=>r.Name)
+                    .Select(r => r.Name)
                     .ToList())
             });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-         public async Task<IActionResult> Create([FromForm] UserDtoForCreation userDto)
+        public async Task<IActionResult> Create([FromForm] UserDtoForCreation userDto)
         {
             var result = await _manager.AuthService.CreateUser(userDto);
             return result.Succeeded
                 ? RedirectToAction("Index")
-                :View();            
+                : View();
         }
 
-        public async Task<IActionResult> Update([FromRoute(Name ="id")] string id)
+        public async Task<IActionResult> Update([FromRoute(Name = "id")] string id)
         {
+            ViewData["Title"] = "Update User";
             var user = await _manager.AuthService.GetOneUserForUpdate(id);
             return View(user);
         }
@@ -52,7 +57,7 @@ namespace StoreApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update([FromForm] UserDtoForUpdate userDto)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 await _manager.AuthService.Update(userDto);
                 return RedirectToAction("Index");
@@ -60,8 +65,9 @@ namespace StoreApp.Areas.Admin.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ResetPassword([FromRoute(Name ="id")] string id)
+        public async Task<IActionResult> ResetPassword([FromRoute(Name = "id")] string id)
         {
+            ViewData["Title"] = "Reset Password";
             return View(new ResetPasswordDto()
             {
                 UserName = id
@@ -72,8 +78,22 @@ namespace StoreApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordDto model)
         {
+            ViewData["Title"] = "Reset Password";
             var result = await _manager.AuthService.ResetPassword(model);
-            return result.Succeeded 
+            return result.Succeeded
+                ? RedirectToAction("Index")
+                : View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteOneUser([FromForm] UserDto userDto)
+        {            
+            var result = await _manager
+                .AuthService
+                .DeleteOneUser(userDto.UserName);
+
+            return result.Succeeded
                 ? RedirectToAction("Index")
                 : View();
         }
